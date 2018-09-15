@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这是一个网页</title>
+    <style type="text/css">
+        /*类选择 特殊样式*/
+        .ppp{
+            color: rgb(0,140,15);
+            font-size: 20px;
+            font-weight: bold;
+            font-family: microsoft yahei;
+            font-style: italic; /*斜体*/
+            text-decoration: underline; /*下划线*/
+        }
+        /*不同id 进行不同样式*/
+        #xxx{
+            color: rgb(15,100,0);
+        }
+    </style>
+    <!--连接Css文件-->
+    <link href="cssx.css"
+    type="text/css"
+    rel="stylesheet"/>
+</head>
+<body>
+<h1>HYML文档的后缀名</h1>
+<ul>
+    <li>.html</li>
+    <li>.html</li>
+</ul>
+<!-- -->
+<p class="ppp">以上两种<span>选择器 选择的这段字</span>后缀名没有区别，都可以使用</p>
+<p >以上两种<span class="ppp" id="xxx">选择器 选择的这段字</span>后缀名没有区别，都可以使用</p>
+<a href="http://www.baidu.com">开始学习HTML！</a>
+<hr>
+</body>
+</html>
