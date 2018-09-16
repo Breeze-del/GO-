@@ -58,7 +58,10 @@ func comma(s string) string {
 	if n <= 3 {
 		return s
 	}
-
 	//递归
 	return comma(s[:n-3]+","+s[n-3:])
+}
+
+func stringPrefix(x string) string {
+	return x
 }
