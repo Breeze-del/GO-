@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math"
+	"os"
 )
 
 /*
@@ -17,15 +19,15 @@ func main() {
 }
 */
 const (
-	width, height = 600, 320 //以像素表示画布的大小
-	cells=100   //网络单元格数目
-	xyrange = 30.0  //坐标轴的范围
-	xyscale =width/2/xyrange //坐标轴上每个单位的 长度的像素
-	zxcale = height * 0.4 //z 轴上每个单位长度的像素
-	angle = math.Pi/6  //x，y轴上的角度
+	width, height = 600, 320            //以像素表示画布的大小
+	cells         = 100                 //网络单元格数目
+	xyrange       = 30.0                //坐标轴的范围
+	xyscale       = width / 2 / xyrange //坐标轴上每个单位的 长度的像素
+	zxcale        = height * 0.4        //z 轴上每个单位长度的像素
+	angle         = math.Pi / 6         //x，y轴上的角度
 )
 
-var sin30,cos30 = math.Sin(angle), math.Cos(angle)
+var sin30, cos30 = math.Sin(angle), math.Cos(angle)
 
 func main() {
 	//fmt.Printf("<svg xmlns= 'http://www.32.org/2000/svg'" +
@@ -44,9 +46,16 @@ func main() {
 	//fmt.Println("</svg>")
 
 	//切片实现动态数组
-	var str = []string{"aaaa","bbbb"}
+	var str = []string{"aaaa", "bbbb"}
 	str = append(str, "cccc")
 	fmt.Println(str)
+	//标准输入 多组string
+	reader := bufio.NewReader(os.Stdin)
+	result, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("read error:", err)
+	}
+	fmt.Println("result:", result)
 }
 
 func Corner(i, j int) (float64, float64) {
@@ -55,9 +64,9 @@ func Corner(i, j int) (float64, float64) {
 	y := xyrange * (float64(j)/cells - 0.5)
 
 	//计算曲面的高度
-	z := f(x,y)
+	z := f(x, y)
 	//将x,y,z投影到二维SVG的绘图平面上，坐标是(sx,xy)
-	sx := width/2+(x-y)*cos30*xyrange
+	sx := width/2 + (x-y)*cos30*xyrange
 	sy := height/2 + (x+y)*sin30*xyrange - z*zxcale
 	return sx, sy
 }
