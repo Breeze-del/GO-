@@ -12,6 +12,8 @@ type Function interface {
 type Stack []interface{}
 
 func (stack *Stack) Push(v interface{}) {
+	//不会出现 越界的情况 因为append使在尾部直接追加
+	//append 真的动态数组的良心
 	*stack = append(*stack, v)
 }
 

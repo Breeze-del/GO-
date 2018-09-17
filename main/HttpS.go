@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"image"
 	"image/color"
 	"image/gif"
@@ -9,10 +10,9 @@ import (
 	"log"
 	"math"
 	"math/rand"
+	"myapp1/tempconv"
 	"net/http"
 	"sync"
-	"tempconv"
-	"html/template"
 	"time"
 )
 
@@ -21,11 +21,11 @@ var count int
 
 func counter(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
-	fmt.Fprintf(w,"Count %d\n",count)
+	fmt.Fprintf(w, "Count %d\n", count)
 	mu.Unlock()
 }
 
-func lisa(w http.ResponseWriter, r *http.Request)  {
+func lisa(w http.ResponseWriter, r *http.Request) {
 	Lissajous(w)
 }
 func Lissajous(out io.Writer) {
@@ -56,23 +56,22 @@ func Lissajous(out io.Writer) {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w,"%s %s %s \n", r.Method, r.URL, r.Proto)
-	for k,v := range r.Header {
-		fmt.Fprintf(w,"Header[%q]=%q\n", k, v)
+	fmt.Fprintf(w, "%s %s %s \n", r.Method, r.URL, r.Proto)
+	for k, v := range r.Header {
+		fmt.Fprintf(w, "Header[%q]=%q\n", k, v)
 	}
-	fmt.Fprintf(w,"Host = %q\n", r.Host)
-	fmt.Fprintf(w,"RemoteAddr = %q\n", r.RemoteAddr)
+	fmt.Fprintf(w, "Host = %q\n", r.Host)
+	fmt.Fprintf(w, "RemoteAddr = %q\n", r.RemoteAddr)
 	if err := r.ParseForm(); err != nil {
 		log.Print(err)
 	}
-	for k, v :=range r.Form {
-		fmt.Fprintf(w,"From[%q]= %q\n", k, v)
+	for k, v := range r.Form {
+		fmt.Fprintf(w, "From[%q]= %q\n", k, v)
 	}
 	mu.Lock()
 	count++
 	mu.Unlock()
 }
-
 
 var palette = []color.Color{color.White, color.Black}
 
@@ -115,45 +114,37 @@ func jspp(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	t, err := template.ParseFiles("F:/mygo/src/index/xxx.html")
 	if err != nil {
-		fmt.Fprint(w,"error %s",err)
+		fmt.Fprint(w, "error %s", err)
 	}
-	t.Execute(w,nil,)
+	t.Execute(w, nil)
 
 }
 func main() {
 	//如果不自己定义 那么会使用默认的MUX和server
 	//自定义Server
 	server := &http.Server{
-		Addr:"localhost:8000",
-		WriteTimeout: 2 * time.Second,  //写超时2秒 函数处理时间不能超过两秒不返回
+		Addr:         "localhost:8000",
+		WriteTimeout: 2 * time.Second, //写超时2秒 函数处理时间不能超过两秒不返回
 	}
 	//自己写的mux路由
 	mux := http.NewServeMux()
 	//Handler 就是方法  路由匹配路径然后调用相应方法
-	mux.Handle("/complex",&myHandler{})
-	mux.HandleFunc("/",handler)
-	mux.HandleFunc("/count",counter)
-	mux.HandleFunc("/lisa",lisa)
-	mux.HandleFunc("/surface",surface)
-	mux.HandleFunc("/draw",temp)
+	mux.Handle("/complex", &myHandler{})
+	mux.HandleFunc("/", handler)
+	mux.HandleFunc("/count", counter)
+	mux.HandleFunc("/lisa", lisa)
+	mux.HandleFunc("/surface", surface)
+	mux.HandleFunc("/draw", temp)
 	//绑定mux到Server上
-	server.Handler=mux
+	server.Handler = mux
 	//文件目录
-	mux.Handle("/jspp/",http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/index"))))
+	mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/index"))))
 	//log.Fatal(http.ListenAndServe("localhost:8000",mux))
 	log.Fatal(server.ListenAndServe())
 }
-type myHandler struct {}
-func (* myHandler)ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+type myHandler struct{}
+
+func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	tempconv.ComplexImage(w)
 }
-
-
-
-
-
-
-
-
-
-
