@@ -1,10 +1,7 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
 	"math"
-	"os"
 )
 
 /*
@@ -46,16 +43,16 @@ func main() {
 	//fmt.Println("</svg>")
 
 	//切片实现动态数组
-	var str = []string{"aaaa", "bbbb"}
-	str = append(str, "cccc")
-	fmt.Println(str)
-	//标准输入 多组string
-	reader := bufio.NewReader(os.Stdin)
-	result, err := reader.ReadString('\n')
-	if err != nil {
-		fmt.Println("read error:", err)
-	}
-	fmt.Println("result:", result)
+	//var str = []string{"aaaa", "bbbb"}
+	//str = append(str, "cccc")
+	//fmt.Println(str)
+	////标准输入 多组string
+	//reader := bufio.NewReader(os.Stdin)
+	//result, err := reader.ReadString('\n')
+	//if err != nil {
+	//	fmt.Println("read error:", err)
+	//}
+	//fmt.Println("result:", result)
 }
 
 func Corner(i, j int) (float64, float64) {

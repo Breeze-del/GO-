@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 )
 
 var n = flag.Bool("n", false, "omit trailing newline")
@@ -16,9 +15,9 @@ func main() {
 			fmt.Println()
 		}
 	*/
-	var s *[]int
-	s = fib(50)
-	fmt.Println(*s)
+	//var s *[]int
+	//s = fib(50)
+	//fmt.Println(*s)
 }
 
 //最大公约数求解   元组赋值可以完成两个数组的交换 x,y=y,x

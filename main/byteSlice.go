@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"myapp1/tempconv"
 )
 
 func intsToString(values []int) string {
@@ -36,16 +35,16 @@ func main() {
 
 	//实验Stack  切片的赋值需要range 赋值
 	//fc是实现stack方法的接口  stack只是一个当做任意类型的数据的口接口
-	var fc tempconv.Function
-	//stack := make(tempconv.Stack, 4)
-	var stack tempconv.Stack = make(tempconv.Stack, 4)
-	t := []int{1, 2, 3, 4}
-	for i, v := range t {
-		stack[i] = v
-		//stack.Push(v)
-		fmt.Println(i, v)
-	}
-	fc = &stack
-	tp, err := fc.Top()
-	fmt.Println(tp, err)
+	//var fc tempconv.Function
+	////stack := make(tempconv.Stack, 4)
+	//var stack tempconv.Stack = make(tempconv.Stack, 4)
+	//t := []int{1, 2, 3, 4}
+	//for i, v := range t {
+	//	stack[i] = v
+	//	//stack.Push(v)
+	//	fmt.Println(i, v)
+	//}
+	//fc = &stack
+	//tp, err := fc.Top()
+	//fmt.Println(tp, err)
 }

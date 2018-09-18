@@ -13,7 +13,6 @@ import (
 	"myapp1/tempconv"
 	"net/http"
 	"sync"
-	"time"
 )
 
 var mu sync.Mutex
@@ -120,27 +119,27 @@ func jspp(w http.ResponseWriter, r *http.Request) {
 
 }
 func main() {
-	//如果不自己定义 那么会使用默认的MUX和server
-	//自定义Server
-	server := &http.Server{
-		Addr:         "localhost:8000",
-		WriteTimeout: 2 * time.Second, //写超时2秒 函数处理时间不能超过两秒不返回
-	}
-	//自己写的mux路由
-	mux := http.NewServeMux()
-	//Handler 就是方法  路由匹配路径然后调用相应方法
-	mux.Handle("/complex", &myHandler{})
-	mux.HandleFunc("/", handler)
-	mux.HandleFunc("/count", counter)
-	mux.HandleFunc("/lisa", lisa)
-	mux.HandleFunc("/surface", surface)
-	mux.HandleFunc("/draw", temp)
-	//绑定mux到Server上
-	server.Handler = mux
-	//文件目录
-	mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/index"))))
-	//log.Fatal(http.ListenAndServe("localhost:8000",mux))
-	log.Fatal(server.ListenAndServe())
+	////如果不自己定义 那么会使用默认的MUX和server
+	////自定义Server
+	//server := &http.Server{
+	//	Addr:         "localhost:8000",
+	//	WriteTimeout: 2 * time.Second, //写超时2秒 函数处理时间不能超过两秒不返回
+	//}
+	////自己写的mux路由
+	//mux := http.NewServeMux()
+	////Handler 就是方法  路由匹配路径然后调用相应方法
+	//mux.Handle("/complex", &myHandler{})
+	//mux.HandleFunc("/", handler)
+	//mux.HandleFunc("/count", counter)
+	//mux.HandleFunc("/lisa", lisa)
+	//mux.HandleFunc("/surface", surface)
+	//mux.HandleFunc("/draw", temp)
+	////绑定mux到Server上
+	//server.Handler = mux
+	////文件目录
+	//mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/index"))))
+	////log.Fatal(http.ListenAndServe("localhost:8000",mux))
+	//log.Fatal(server.ListenAndServe())
 }
 
 type myHandler struct{}
