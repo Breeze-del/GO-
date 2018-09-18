@@ -8,14 +8,14 @@ import (
 )
 
 func main() {
-	arr := read("1.txt")
-	ss := walk(arr, point{0, 0}, point{len(arr) - 1, len(arr[0]) - 1})
-	for _, v := range ss {
-		for _, vv := range v {
-			fmt.Print(vv, "  ")
-		}
-		fmt.Println()
-	}
+	//arr := read("1.txt")
+	//ss := walk(arr, point{0, 0}, point{len(arr) - 1, len(arr[0]) - 1})
+	//for _, v := range ss {
+	//	for _, vv := range v {
+	//		fmt.Print(vv, "  ")
+	//	}
+	//	fmt.Println()
+	//}
 }
 
 var dirs = [4]point{ //左下右上
