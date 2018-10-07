@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3</title>
+    <script src="d3.v3.js"></script>
+</head>
+<body>
+     <p class="myclass">Apple</p>
+     <P class="myclass">Pear</P>
+     <p id="myid">Banana</p>
+<script>
+    // 第一个P
+    // d3.select("body").select("p").style("color","red");
+    //全部P
+    // d3.selectAll("p").style("color","blue");
+    //选择idP 改变样式
+    // d3.select("body").select("#myid").style("color","green");
+    //选择第一个和第三个
+    // d3.selectAll("body").select(".myclass").style("color","red");
+    //通用方法
+    d3.select("body").selectAll("p")
+    .style("color",function (d, i) {
+        if(i == 0) {
+            return "red";
+        }
+    });
+</script>
+</body>
+</html>

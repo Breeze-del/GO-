@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="d3.v3.js"></script>
+</head>
+<body>
+<p></p>
+<p></p>
+<p></p>
+<script>
+    // var dataset = ["dog","cat","snake"];
+    // 全部数据
+    // d3.select("body").selectAll("p")
+    // .datum(dataset)
+    // .text(function (d, i) {
+    //     return "第"  + i +  "个数据是" +d
+    // })
+    // 绑定数据
+    // d3.select("body").selectAll("p")
+    //         .data(dataset)
+    //         .text(function (d, i) {
+    //             return "第"  + i +  "个数据是" +d
+    //         });
+    var data = [
+        {"color":"red","text":"apple"},
+        {"color":"yellow","text":"banana"},
+        {"color":"orange","text":"orange"}
+    ];
+    d3.select("body").selectAll("p")
+            .data(data).text(function (d, i) {
+        return d.text;
+    }).style("color",function (d, i) {
+        return d.color;
+    })
+</script>
+</body>
+</html>

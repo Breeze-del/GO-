@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./d3.v3.js"></script>
+</head>
+<body>
+<text id="mttext"></text>
+<script>
+    d3.json("rect.json",function (err, dataset) {
+        if(err) {
+            return ;
+        }
+        //console.log(dataset);
+        var width= 300;
+        var height = 400;
+        var svg = d3.select("body").append("svg")
+                .attr("width",width).attr("height",height)
+        var rectHeight = 25;
+        svg.selectAll("rect").data(dataset["data"])
+                .enter().append("rect")
+                .attr("y",function (d, i) {
+                    return 400-d.width;
+                })
+                .attr("x",function (d, i) {
+                    return i*rectHeight;
+                })
+                .attr("height",function (d, i) {
+                    return d.width;
+                })
+                .attr("width",rectHeight - 2);
+    });
+
+</script>
+</body>
+</html>
