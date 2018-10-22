@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="d3.v3.js"></script>
+    <script src="tooltips.js"></script>
+    <style>
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+        }
+
+        /* Style northward tooltips differently */
+        .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<script>
+    var width = 300,
+            height = 300,
+            rectStep = 35,
+            rectWidth = 30;
+    var colors = d3.scale.category10(); //颜色比例尺
+
+    var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                return "<strong>Frequency:</strong> <span style='color:red'>" + d.width + "</span>";
+            });
+
+    d3.json('./rect.json', function (err, dataset) {
+        if (err) {
+            alert('出错')
+        }
+        console.log(dataset);
+
+        var svg = d3.select('body')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+        svg.call(tip);
+
+        svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect")
+                .attr('x', (d, i) => i * rectStep)
+                .attr('y', (d, i) => height - d.width)
+                .attr('width', rectWidth)
+                .attr('height', (d, i) => d.width)
+                .attr('fill', (d, i) => colors(i))
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
+
+        var text = svg.selectAll('text')
+                .data(dataset)
+                .enter()
+                .append('text')
+                .attr('fill', 'white')
+                .attr('font-size', '15px')
+                .attr('text-anchor', 'middle')
+                .attr('x', (d, i) => i * rectStep)
+                .attr('y', (d, i) => height - d.width)
+                .attr('dx', rectWidth / 2)
+                .attr('dy', '1em')
+                .text((d, i) => d.width)
+
+    })
+
+
+</script>
+</body>
+</html>
