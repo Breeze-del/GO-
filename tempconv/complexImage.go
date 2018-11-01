@@ -13,7 +13,7 @@ func ComplexImage(out io.Writer) {
 		xmin, ymin, xmax, ymax = -2, -2, +2, +2
 		width, height          = 1024, 1024
 	)
-	img := image.NewRGBA(image.Rect(0,0,width,height))
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < width; py++ {
 		y := float64(py)/height*(ymax-ymin) + ymin
 		for px := 0; px < width; px++ {
@@ -22,7 +22,7 @@ func ComplexImage(out io.Writer) {
 			img.Set(px, py, mandelbrot(z))
 		}
 	}
-	png.Encode(out,img)
+	png.Encode(out, img)
 }
 
 func mandelbrot(z complex128) color.Color {

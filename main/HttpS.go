@@ -136,10 +136,10 @@ func main() {
 	mux.HandleFunc("/surface", surface)
 	mux.HandleFunc("/draw", temp)
 	mux.HandleFunc("/json", jspp)
-	//绑定mux到Server上
-	server.Handler = mux
 	//文件目录
 	mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/myapp1/index"))))
+	//绑定mux到Server上
+	server.Handler = mux
 	//log.Fatal(http.ListenAndServe("localhost:8000",mux))
 	log.Fatal(server.ListenAndServe())
 }
