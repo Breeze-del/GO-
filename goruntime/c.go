@@ -15,7 +15,8 @@ func main() {
 		log.Fatal(err)
 	}
 	defer coon.Close()
-	mustCopy(os.Stdout, coon)
+	go mustCopy(os.Stdout, coon)
+	mustCopy(coon, os.Stdin)
 }
 
 // 将coon【服务器】 返回得信息copy输出到os.stdout上
