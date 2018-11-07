@@ -2,6 +2,7 @@ package rpcdemo
 
 import "github.com/pkg/errors"
 
+// 可以放入服务需要的配置
 type DemoService struct {
 }
 
