@@ -9,7 +9,7 @@ import (
 
 // 模拟客户端连接
 func main() {
-	conn, err := net.Dial("tcp", ":1234")
+	conn, err := net.Dial("tcp", ":9000")
 	if err != nil {
 		panic(err)
 	}

@@ -12,7 +12,7 @@ import (
 func main() {
 	// 将方法发布到默认服务器上
 	rpc.Register(rpcdemo.DemoService{})
-	listener, err := net.Listen("tcp", ":1234")
+	listener, err := net.Listen("tcp", ":9000")
 	if err != nil {
 		panic(err)
 	}
