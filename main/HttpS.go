@@ -137,7 +137,9 @@ func main() {
 	mux.HandleFunc("/draw", temp)
 	mux.HandleFunc("/json", jspp)
 	//文件目录
-	mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/myapp1/index"))))
+	mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/myapp1/index/"))))
+	// 绑定本地文件路由
+	mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("F:/mygo/src/myapp1/index/images/"))))
 	//绑定mux到Server上
 	server.Handler = mux
 	//log.Fatal(http.ListenAndServe("localhost:8000",mux))
