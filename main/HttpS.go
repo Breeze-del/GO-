@@ -12,6 +12,7 @@ import (
 	"math/rand"
 	"myapp1/tempconv"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 )
@@ -119,6 +120,39 @@ func jspp(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 
 }
+
+// 路由第二种方法 定义map 通过map找到路由方法 然后调用
+type HomeHandler struct{}
+
+func (h *HomeHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	// 查看map中是否有这个路径 然后返回方法
+	if h, ok := mux2[req.URL.String()]; ok {
+		h(w, req)
+		return
+	}
+	io.WriteString(w, "aaaaa")
+}
+
+var mux2 map[string]func(http.ResponseWriter, *http.Request)
+
+// 这里定义许多路由后执行的方法
+func bye(w http.ResponseWriter, req *http.Request) {
+	io.WriteString(w, "byebye")
+}
+func luyou2() {
+	type myHandler struct{}
+	serve1 := &http.Server{
+		Addr:    ":8080",
+		Handler: &HomeHandler{},
+	}
+	mux2 = make(map[string]func(http.ResponseWriter, *http.Request))
+	mux2["/bye"] = bye
+	err := serve1.ListenAndServe()
+	if err != nil {
+		return
+	}
+}
+
 func main() {
 	//如果不自己定义 那么会使用默认的MUX和server
 	//自定义Server
@@ -128,7 +162,7 @@ func main() {
 	}
 	//自己写的mux路由
 	mux := http.NewServeMux()
-	//Handler 就是方法  路由匹配路径然后调用相应方法
+	// 路由第一种方法 Handler 就是方法  路由匹配路径然后调用相应方法
 	mux.Handle("/complex", &myHandler{})
 	mux.HandleFunc("/", handler)
 	mux.HandleFunc("/count", counter)
@@ -136,6 +170,12 @@ func main() {
 	mux.HandleFunc("/surface", surface)
 	mux.HandleFunc("/draw", temp)
 	mux.HandleFunc("/json", jspp)
+	// 获得工作目录的绝对路径
+	w, err := os.Getwd()
+	println(w)
+	if err != nil {
+		fmt.Println(err)
+	}
 	//文件目录
 	mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/myapp1/index/"))))
 	// 绑定本地文件路由
