@@ -176,7 +176,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//文件目录
+	//文件服务器
 	mux.Handle("/jspp/", http.StripPrefix("/jspp/", http.FileServer(http.Dir("F:/mygo/src/myapp1/index/"))))
 	// 绑定本地文件路由
 	mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("F:/mygo/src/myapp1/index/images/"))))
@@ -186,6 +186,8 @@ func main() {
 	log.Fatal(server.ListenAndServe())
 }
 
+// 自定义实现处理函数，定义的struct需要实现Handler接口，也就是实现ServeHTTP方法
+// 然后就能通过接口直接调用 struct的ServeHTTP方法了
 type myHandler struct{}
 
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
