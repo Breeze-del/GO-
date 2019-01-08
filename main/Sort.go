@@ -12,7 +12,8 @@ func main() {
 	sort.Sort(list)
 	fmt.Println(sort.IntsAreSorted(list))
 	// 倒序输出 改变序列号 实现倒序输出
-	sort.Sort(sort.Reverse(list))
+	// sort.Sort(sort.Reverse(list))
+	sort.Sort(list)
 	fmt.Println(list)
 }
 
