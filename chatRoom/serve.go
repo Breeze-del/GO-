@@ -51,12 +51,22 @@ func main() {
 // 处理用户的连接
 func HandleConn(conn net.Conn) {
 	defer conn.Close()
+	data := make([]byte, 20, 20)
+	length, err := conn.Read(data)
+	if err != nil {
+		fmt.Printf("Client %v quit.\n", conn.RemoteAddr())
+		conn.Close()
+		return
+	}
+	name := string(data[:length])
+	comeStr := name + " entered the room."
+	message <- comeStr
 	// 获取用户地址
 	clientAddr := conn.RemoteAddr().String()
 	// 创建用户实体
 	client := Client{
 		C:    make(chan string),
-		Name: clientAddr,
+		Name: name,
 		Addr: clientAddr,
 	}
 	// 将用户添加到map里
